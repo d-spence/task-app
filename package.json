@@ -1,0 +1,13 @@
+{
+  "name": "task-app",
+  "version": "1.0.0",
+  "description": "The finest task tracking app in the southfarthing.",
+  "main": "index.js",
+  "scripts": {
+    "backend": "npm run dev --prefix backend",
+    "dev": "concurrently \"npm run backend\""
+  },
+  "keywords": [],
+  "author": "Dan Spencer (d-spence)",
+  "license": "ISC"
+}
