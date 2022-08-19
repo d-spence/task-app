@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const chalk = require('chalk');
 const tasksRoutes = require('./routes/tasks');
 
@@ -18,7 +19,19 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(chalk.green.bold.underline(`Server listening on port ${PORT}`));
+const appListen = () => {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => {
+    console.log(chalk.green.bold.underline(`Server listening on port ${PORT}`));
+  });
+}
+
+// connect to db
+const db = mongoose.createConnection(process.env.MONGO_URI);
+
+// db connection event handlers
+db.on('connected', () => {
+  console.log(chalk.blue.bold.underline('Connection to database established'));
+  appListen();
 });
+db.on('error', (error) => console.log(chalk.red(error)));
