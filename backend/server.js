@@ -11,13 +11,13 @@ const app = express();
 // middleware
 app.use(express.json());
 
-// routes
-app.use('/api/tasks', tasksRoutes);
-
 app.use((req, res, next) => {
-  console.log(chalk.bold(req.method, req.path)); // log requests
+  console.log(chalk.gray(req.method, req.path)); // log requests
   next();
 });
+
+// routes
+app.use('/api/tasks', tasksRoutes);
 
 const appListen = () => {
   const PORT = process.env.PORT || 4000;
@@ -27,7 +27,8 @@ const appListen = () => {
 }
 
 // connect to db
-const db = mongoose.createConnection(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI);
+const db = mongoose.connection;
 
 // db connection event handlers
 db.on('connected', () => {
